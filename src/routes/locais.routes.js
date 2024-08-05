@@ -14,6 +14,7 @@ locaisRoutes.post('/', verificarPermissao(['cadastrarLocal']), LocalController.c
             description: 'Cadastro de usuário',
             required: true,
             schema: { 
+                $usuarioID: 3,
                 $nome: "UFSC - CCB",
                 $descricao: "Coleta de resíduos biológicos",
                 $cep: "88040900",

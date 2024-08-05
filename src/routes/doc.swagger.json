@@ -163,6 +163,10 @@
             "schema": {
               "type": "object",
               "properties": {
+                "usuarioID": {
+                  "type": "number",
+                  "example": 3
+                },
                 "nome": {
                   "type": "string",
                   "example": "UFSC - CCB"
@@ -201,6 +205,7 @@
                 }
               },
               "required": [
+                "usuarioID",
                 "nome",
                 "descricao",
                 "cep",
@@ -265,7 +270,7 @@
         "tags": [
           "Locais de coleta"
         ],
-        "description": "Endpoint para buscar um local de coleta pelo seu id. ",
+        "description": "Endpoint para buscar um local de coleta pelo seu id.",
         "parameters": [
           {
             "name": "id",
@@ -301,7 +306,7 @@
         "tags": [
           "Locais de coleta"
         ],
-        "description": "Endpoint para editar um local de coleta. ",
+        "description": "Endpoint para editar um local de coleta. Inserir o id do local",
         "parameters": [
           {
             "name": "id",
@@ -560,7 +565,7 @@
               "properties": {
                 "usuarioId": {
                   "type": "number",
-                  "example": 3
+                  "example": 1
                 },
                 "permissaoId": {
                   "type": "number",
