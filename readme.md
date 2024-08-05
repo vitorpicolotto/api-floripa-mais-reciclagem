@@ -139,6 +139,7 @@ Para esta aplicação, está disponibilizado um .env de exemplo, com as configur
 ## Melhorias
 Algumas melhorias ainda precisam ser aplicadas:
 - Utilizar outras APIs para obter melhores resultados na requisição da localização
+- Melhorar as permissões de usuário
 - Refatoração do código
 
 ## Sobre
