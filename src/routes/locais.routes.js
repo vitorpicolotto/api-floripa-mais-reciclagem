@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const LocalController = require('../controllers/LocalController')
+const verificarPermissao = require('../middlewares/verificarPermissao')
 
 /*
 Rotas necessárias (CRUD completo):
@@ -12,11 +13,11 @@ Rotas necessárias (CRUD completo):
 
 const locaisRoutes = new Router()
 
-locaisRoutes.post('/', LocalController.cadastrar)
-locaisRoutes.get('/', LocalController.listarTodos)
-locaisRoutes.get('/:id', LocalController.listarUm)
-locaisRoutes.put('/:id', LocalController.atualizar)
-locaisRoutes.delete('/:id', LocalController.deletar)
+locaisRoutes.post('/', verificarPermissao(['cadastrarLocal']), LocalController.cadastrar)
+locaisRoutes.get('/', verificarPermissao(['buscarLocal']),LocalController.listarTodos)
+locaisRoutes.get('/:id', verificarPermissao(['buscarLocal']),LocalController.listarUm)
+locaisRoutes.put('/:id', verificarPermissao(['editarLocal']), LocalController.atualizar)
+locaisRoutes.delete('/:id', verificarPermissao(['excluirLocal']),LocalController.deletar)
 
 locaisRoutes.get('/:local_id/maps', LocalController.buscarLinkGoogleMaps)
 
