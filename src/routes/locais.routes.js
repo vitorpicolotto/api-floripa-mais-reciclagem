@@ -18,5 +18,6 @@ locaisRoutes.get('/:id', LocalController.listarUm)
 locaisRoutes.put('/:id', LocalController.atualizar)
 locaisRoutes.delete('/:id', LocalController.deletar)
 
+locaisRoutes.get('/:local_id/maps', LocalController.buscarLinkGoogleMaps)
 
 module.exports = locaisRoutes

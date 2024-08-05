@@ -1,4 +1,5 @@
 const Local = require("../models/Local")
+const { buscarMapa, buscarLinkGoogleMaps } = require("../services/map.service")
 
 
 class LocalController{
@@ -125,6 +126,39 @@ class LocalController{
             response.status(500).json({mensagem: 'Erro ao deletar local de coleta!'})
         }
     }
+
+    async buscarLinkGoogleMaps(request, response){
+        try {
+            const id = request.params.id
+            const userId = request.usuarioID
+
+            const local = await Local.findByPk(id)
+            if(!local){
+                response.status(404).json({mensagem: 'Local de coleta não encontrado.'})
+            }
+            
+            if(local.usuarioID !== userId){
+                response.status(403).json({mensagem: 'Você não possui as permissões necessárias para visualizar o local'})
+            }
+
+            const mapaLocal = await buscarMapa(local.cep)
+            if(!mapaLocal){
+                response.status(404).json({mensagem: 'Não foi possível encontrar o mapa do local.'})
+            }
+
+            const googleMapsLink = await buscarLinkGoogleMaps(mapaLocal)
+            if(!googleMapsLink){
+                response.status(404).json({mensagem: 'Não foi possível encontrar o link do mapa do Google Maps'})
+            }
+
+            response.json({link: googleMapsLink.linkGoogleMaps}) //response.json({ googleMapsLink });
+
+        } catch (error) {
+            console.log(error)
+            response.status(500).json({mensagem: 'Erro ao gerar link do Google Maps'})
+        }
+    }
+
 }
 
 module.exports = new LocalController()
