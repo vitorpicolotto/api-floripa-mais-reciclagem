@@ -1,0 +1,602 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API Floripa Mais Reciclagem",
+    "description": "Documentação da API F+R usando Express, Sequelize, PostgreSQL e Swagger",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Chave de API para autenticação. Insira o token JWT."
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "description": "Endpoint para efetuar o login. Usar usuário e senha do cadastro",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "body",
+            "description": "Login de usuário",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "kratos@email.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "atreus123456"
+                }
+              },
+              "required": [
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/usuarios/": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "description": "Endpoint para cadastrar um novo usuário.",
+        "parameters": [
+          {
+            "name": "criarUsuario",
+            "in": "body",
+            "description": "Cadastro de usuário",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Kratos"
+                },
+                "cpf": {
+                  "type": "string",
+                  "example": "01234567890"
+                },
+                "nascimento": {
+                  "type": "string",
+                  "example": "2005-06-30"
+                },
+                "sexo": {
+                  "type": "string",
+                  "example": "M"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "88085155"
+                },
+                "endereco": {
+                  "type": "string",
+                  "example": "Rua Campolino Alves"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "kratos@email.com"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "atreus123456"
+                }
+              },
+              "required": [
+                "nome",
+                "cpf",
+                "nascimento",
+                "sexo",
+                "cep",
+                "endereco",
+                "email",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/local/": {
+      "post": {
+        "tags": [
+          "Locais de coleta"
+        ],
+        "description": "Endpoint para cadastrar um novo local de coleta.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "criarUsuario",
+            "in": "body",
+            "description": "Cadastro de usuário",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "UFSC - CCB"
+                },
+                "descricao": {
+                  "type": "string",
+                  "example": "Coleta de resíduos biológicos"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "88040900"
+                },
+                "endereco": {
+                  "type": "string",
+                  "example": "Rua Roberto Sampaio Gonzaga"
+                },
+                "numero": {
+                  "type": "number",
+                  "example": 0
+                },
+                "bairro": {
+                  "type": "string",
+                  "example": "Trindade"
+                },
+                "latitude": {
+                  "type": "number",
+                  "example": -27.601101
+                },
+                "longitude": {
+                  "type": "number",
+                  "example": -48.520001
+                },
+                "residuos": {
+                  "type": "string",
+                  "example": "Seringas, sangue, outros materiais biológicos"
+                }
+              },
+              "required": [
+                "nome",
+                "descricao",
+                "cep",
+                "endereco",
+                "numero",
+                "bairro",
+                "latitude",
+                "longitude",
+                "residuos"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Locais de coleta"
+        ],
+        "description": "Endpoint para buscar os locais de coleta catastrados. ",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/local/{id}": {
+      "get": {
+        "tags": [
+          "Locais de coleta"
+        ],
+        "description": "Endpoint para buscar um local de coleta pelo seu id. ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Locais de coleta"
+        ],
+        "description": "Endpoint para editar um local de coleta. ",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "atualizar",
+            "in": "body",
+            "description": "Listagem de locais.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "UFSC - Centro de Ciências Biológicas"
+                }
+              },
+              "required": [
+                "nome"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Locais de coleta"
+        ],
+        "description": "Endpoint para deletar um local de coleta.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/local/{id}/maps": {
+      "get": {
+        "tags": [
+          "Locais de coleta"
+        ],
+        "description": "Endpoint para buscar um link com as coordenadas do local de coleta.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/permissoes/": {
+      "post": {
+        "tags": [
+          "Permissões"
+        ],
+        "description": "Endpoint para criar uma nova permissão para os usuários.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "criar",
+            "in": "body",
+            "description": "Criação de permissão: cadastrarLocal. Necessário criar as permissões de excluirLocal e buscarLocal.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "descricao": {
+                  "type": "string",
+                  "example": "cadastrarLocal"
+                }
+              },
+              "required": [
+                "descricao"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Permissões"
+        ],
+        "description": "Endpoint para buscar as permissão para os usuários. ",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/permissoes/{id}": {
+      "delete": {
+        "tags": [
+          "Permissões"
+        ],
+        "description": "Endpoint para deletar uma permissão.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/permissoes/atribuir": {
+      "post": {
+        "tags": [
+          "Permissões"
+        ],
+        "description": "Endpoint para atribuir uma permissão. Adicionar permissões de 1 a 3 (cadastrar, excluir e buscar)",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "deletar",
+            "in": "body",
+            "description": "Atribuição de permissão a um usuário.",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "usuarioId": {
+                  "type": "number",
+                  "example": 3
+                },
+                "permissaoId": {
+                  "type": "number",
+                  "example": 1
+                }
+              },
+              "required": [
+                "usuarioId",
+                "permissaoId"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "apiKeyAuth": []
+    }
+  ]
+}
