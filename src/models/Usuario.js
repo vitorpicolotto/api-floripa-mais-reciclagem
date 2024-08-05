@@ -1,6 +1,8 @@
 const {hashSync} = require('bcryptjs')
 const connection = require('../database/connection')
 const { DataTypes } = require('sequelize')
+const Permissao = require('./Permissao')
+const UsuarioPermissoes = require('./UsuarioPermissoes')
 
 
 const Usuario = connection.define('usuarios', {
@@ -42,7 +44,14 @@ const Usuario = connection.define('usuarios', {
 Usuario.beforeSave((usuario) => {
     usuario.password_hash = hashSync(usuario.password_hash, 10)
     return usuario
-}) //Postman passava que a senha não estava batendo. Precisei incluir este passo agora para "hashar" a senha no PG. Funcionou!
+}) 
+
+Usuario.belongsToMany(Permissao, {
+    through: UsuarioPermissoes,
+    foreignKey: 'usuarioId',
+    otherKey: 'permissaoId'
+})
+
 
 
 module.exports = Usuario
