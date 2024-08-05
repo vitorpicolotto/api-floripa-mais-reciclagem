@@ -130,17 +130,13 @@ class LocalController{
     async buscarLinkGoogleMaps(request, response){
         try {
             const id = request.params.id
-            const userId = request.usuarioID
 
             const local = await Local.findByPk(id)
+            
             if(!local){
                 response.status(404).json({mensagem: 'Local de coleta não encontrado.'})
             }
             
-            if(local.usuarioID !== userId){
-                response.status(403).json({mensagem: 'Você não possui as permissões necessárias para visualizar o local'})
-            }
-
             const mapaLocal = await buscarMapa(local.cep)
             if(!mapaLocal){
                 response.status(404).json({mensagem: 'Não foi possível encontrar o mapa do local.'})
@@ -151,7 +147,7 @@ class LocalController{
                 response.status(404).json({mensagem: 'Não foi possível encontrar o link do mapa do Google Maps'})
             }
 
-            response.json({link: googleMapsLink.linkGoogleMaps}) //response.json({ googleMapsLink });
+            response.json({link: googleMapsLink}) //response.json({ googleMapsLink });
 
         } catch (error) {
             console.log(error)

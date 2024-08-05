@@ -19,6 +19,6 @@ locaisRoutes.get('/:id', verificarPermissao(['buscarLocal']),LocalController.lis
 locaisRoutes.put('/:id', verificarPermissao(['editarLocal']), LocalController.atualizar)
 locaisRoutes.delete('/:id', verificarPermissao(['excluirLocal']),LocalController.deletar)
 
-locaisRoutes.get('/:local_id/maps', LocalController.buscarLinkGoogleMaps)
+locaisRoutes.get('/:id/maps', LocalController.buscarLinkGoogleMaps)
 
 module.exports = locaisRoutes

@@ -8,12 +8,12 @@ async function buscarMapa(cep){
             return {erro: 'Localização não encontrada'}
         }
 
-        const {lat, lon, display_name} = response.data[0]
-        if (!lat || !lon || display_name){
+        const {latitude, longitude, display_name} = response.data[0]
+        if (!latitude || !longitude || display_name){
             return {erro: 'Os dados não permitem encontrar a localização'}
         }
 
-        return{lat, lon, display_name}
+        return{latitude, longitude, display_name}
     } catch (error) {
         console.log(error)
         return {erro: 'Erro ao fazer a requisição da API de mapas'}
@@ -22,9 +22,9 @@ async function buscarMapa(cep){
 
 async function buscarLinkGoogleMaps(local){
     try {
-        const {lat, lon} = local
+        const {latitude, longitude} = local
 
-        const linkGoogleMaps = `https://www.google.com/maps?q=${lat},${lon}`
+        const linkGoogleMaps = `https://www.google.com/maps?q=${latitude},${longitude}`
 
         return{linkGoogleMaps}
 
